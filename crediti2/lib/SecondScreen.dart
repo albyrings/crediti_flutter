@@ -14,6 +14,7 @@ class _SecondScreenState extends State<SecondScreen> {
   void _setvalue(double value) => setState(() => media = value);
   void _setvaluec(double value) => setState(() => comportamento = value);
   void _setvalueec(double value) => setState(() => educazioneCivica = value);
+  void _setvalueq(double value) => setState(() => quadrimestre = value);
 
   final myControllerU = TextEditingController();
   final myControllerP = TextEditingController();
@@ -21,7 +22,9 @@ class _SecondScreenState extends State<SecondScreen> {
   void _incrementCounter() {
     setState(() {
       try {
-        Navigator.pushNamed(context, '/third');
+        if (materieDaVisualizzare != null) {
+          Navigator.pushNamed(context, '/third');
+        }
       } catch (e) {
         Navigator.pushNamed(context, '/error');
       }
@@ -108,6 +111,27 @@ class _SecondScreenState extends State<SecondScreen> {
                     activeColor: Colors.orange,
                     inactiveColor: Colors.black,
                     label: '${educazioneCivica}',
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Text('Quadrimestre',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                  child: Slider(
+                    value: quadrimestre,
+                    onChanged: _setvalueq,
+                    min: 1.0,
+                    max: 2.0,
+                    divisions: 1,
+                    activeColor: Colors.orange,
+                    inactiveColor: Colors.black,
+                    label: '${quadrimestre}',
                   ),
                 ),
               ],

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'costanti.dart';
+import 'package:animated_dialog_box/animated_dialog_box.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ThirdScreen extends StatefulWidget {
   ThirdScreen({Key key, this.title}) : super(key: key);
@@ -12,11 +15,38 @@ class ThirdScreen extends StatefulWidget {
 }
 
 class _ThirdScreenState extends State<ThirdScreen> {
-  int comportamento;
+  //int comportamento;
+
+  void algoritmo_1() async {
+    Map<String, String> data = {
+      'school_code': codiceScuola,
+      'username': username,
+      'password': password,
+      'materie': materie.toString(),
+      'quadrimestre': quadrimestre1.toString(),
+      'media': media.toString(),
+      'cambiamenti': materieval.toString(),
+      'comportamento': comportamento.toString(),
+      'educazione_civica': educazioneCivica.toString(),
+    };
+    const url = 'https://liceoscacchi.herokuapp.com/';
+    await http.post(url, body: data).then((response) {
+      try {
+        //_showaccettazionetermini();
+        dati = response.body;
+        dynamic res = jsonDecode(dati);
+        dati2 = dati1[username];
+      } catch (e) {
+        errore = 'Non è stato possibile accedere ai tuoi dati $e';
+        _showRatingDialog();
+        print(errore);
+      }
+    });
+  }
 
   void _incrementCounter() {
     ottieniVoti();
-    //algoritmo1();
+    algoritmo_1();
     Navigator.pushNamed(context, '/fourth');
   }
 

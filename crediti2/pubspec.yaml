@@ -16,6 +16,7 @@ dependencies:
   shared_preferences: ^0.5.2
   http: ^0.12.2
   font_awesome_flutter: any
+  fl_chart: ^0.12.2
 
 
 dev_dependencies:

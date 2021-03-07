@@ -4,6 +4,8 @@ String password;
 bool accettazione_termini = false;
 String religione = 'RELIGIONE CATTOLICA';
 double comportamento = 9;
+double quadrimestre = 2;
+int quadrimestre1 = quadrimestre.toInt();
 double educazioneCivica = 8;
 double media = 6.1;
 List<String> materie = [];
@@ -208,3 +210,7 @@ void algoritmo1() {
     //q print(e);
   }
 }
+
+List<dynamic> yNVOTI = [0.0, 1.0, 7.0, 2.0, 2.0];
+dynamic mediavecchia = 9.1;
+dynamic mediaideale = 9.8;

@@ -57,24 +57,23 @@ class _LoadingScreenState extends State<LoadingScreen> {
             },
           ),
         ),
-        /*secondButton: MaterialButton(
-          // OPTIONAL BUTTON
+        secondButton: MaterialButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40),
           ),
-          color: Colors.white,
-          child: Text('Cancel'),
+          color: Colors.orange,
+          child: Text('Leggi i termini'),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.pushNamed(context, '/termini');
           },
-        ),*/
+        ),
         icon: Icon(
           Icons.info_outline,
           color: Colors.red,
         ), // IF YOU WANT TO ADD ICON
         yourWidget: Container(
           child: Text(
-            'linkTerminiDiServizio',
+            'Termini di servizio',
           ),
         ));
   }
@@ -99,21 +98,29 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Do less, take more',
-          style: TextStyle(
-            color: Colors.black,
+      body: GestureDetector(
+        onTap: () {
+          _showaccettazionetermini();
+        },
+        child: Center(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.blue, Colors.black],
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Text('',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+              ],
+            ),
           ),
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('.',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
-          ],
         ),
       ),
     );
