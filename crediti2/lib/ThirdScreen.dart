@@ -38,7 +38,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
         dati2 = dati1[username];
       } catch (e) {
         errore = 'Non è stato possibile accedere ai tuoi dati $e';
-        _showRatingDialog();
+        //_showRatingDialog();
         print(errore);
       }
     });
@@ -46,7 +46,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
 
   void _incrementCounter() {
     ottieniVoti();
-    algoritmo_1();
+    //algoritmo_1();
     Navigator.pushNamed(context, '/fourth');
   }
 

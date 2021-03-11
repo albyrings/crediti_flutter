@@ -4,6 +4,7 @@ import 'costanti.dart';
 import 'ThirdScreen.dart';
 import 'FourthScreen.dart';
 import 'loadingScreen.dart';
+import 'FifthScreen.dart';
 import 'MyHomePage.dart';
 import "terminid'utilizzo.dart";
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.orange,
         accentColor: Colors.orange,
       ),
-      initialRoute: '/second',
+      initialRoute: '/fourth',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         //'/': (context) => LoadingScreen(),
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/second': (context) => SecondScreen(),
         '/third': (context) => ThirdScreen(),
         '/fourth': (context) => FourthScreen(),
+        '/fifth': (context) => FifthScreen(),
         '/termini': (context) => TerminiScreen(),
       },
     );

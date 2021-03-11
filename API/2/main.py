@@ -25,55 +25,60 @@ def data(session):
     return str(lista_voti).replace("'", "\"") #era una stringa, rischio di errore
 
 def algoritmo1(session):
-    a_1 = json.loads(data(session))
-    materie = session['materie']
-    qudrimestre = session['quadrimestre']
+    a_1 = json.loads(data(session))[session['username']]
+    materie = session['materie']#["DISEGNO E STORIA DELL ARTE",'FILOSOFIA','FISICA','LATINO','LINGUA INGLESE','MATEMATICA','STORIA','SCIENZE NATURALI','ITALIANO','SCIENZE MOTORIE E SPORTIVE'] #
+    #qudrimestre = int(session['quadrimestre'])
     mm3 = session['media']
     cambiamenti = session['preferenze']
     comportamento = session['comportamento']
     educazione_civica = session['educazione_civica']
     if len(materie) == 10:
+        medie=[0,0,0,0,0,0,0,0,0,0,comportamento,educazione_civica]
         voti_3={materie[0]:[],materie[1]:[],materie[2]:[],materie[3] :[],materie[4]:[],materie[5]:[],materie[6]:[],materie[7]:[],materie[8]:[],materie[9]:[]} 
     elif len(materie) == 11:
+        medie=[0,0,0,0,0,0,0,0,0,0,0,comportamento,educazione_civica]
         voti_3={materie[0]:[],materie[1]:[],materie[2]:[],materie[3] :[],materie[4]:[],materie[5]:[],materie[6]:[],materie[7]:[],materie[8]:[],materie[9]:[],materie[10]:[]} 
     else:
-         voti_3={materie[0]:[],materie[1]:[],materie[2]:[],materie[3] :[],materie[4]:[],materie[5]:[],materie[6]:[],materie[7]:[],materie[8]:[],materie[9]:[],materie[10]:[],materie[11]:[]} 
-    medie=[0,0,0,0,0,0,0,0,0,0,comportamento,educazione_civica]
+        voti_3={materie[0]:[],materie[1]:[],materie[2]:[],materie[3] :[],materie[4]:[],materie[5]:[],materie[6]:[],materie[7]:[],materie[8]:[],materie[9]:[],materie[10]:[],materie[11]:[]} 
+        medie=[0,0,0,0,0,0,0,0,0,0,0,0,comportamento,educazione_civica]    
+    
     mi=-1
     c = 0
     L = len(a_1)
 
-
     for j in materie:
         for i in range(L):
-            if qudrimestre == 2:
-                if a_1[i]['datGiorno'][5]=='0':
-                    if a_1[i]['datGiorno'][6]=='2' or a_1[i]['datGiorno'][6]=='3' or a_1[i]['datGiorno'][6]=='4' or a_1[i]['datGiorno'][6]=='5' or a_1[i]['datGiorno'][6]=='6':
-                        if a_1[i]['desMateria']==j:
-                            tru=a_1[i]['decValore']
-                            if type(tru) != 'NoneType' and tru !=0.00:
-                                voti_3[j].append(tru)
-                        else:
-                            c+=0
+           # try:
+           if a_1[i]['datGiorno'][5] == '0':
+                if a_1[i]['datGiorno'][6]=='2' or a_1[i]['datGiorno'][6]=='3' or a_1[i]['datGiorno'][6]=='4' or a_1[i]['datGiorno'][6]=='5' or a_1[i]['datGiorno'][6]=='6':
+                    if a_1[i]['desMateria']==j:
+                        tru=a_1[i]['decValore']
+                        if type(tru) != 'NoneType' and tru !=0.00:
+                            voti_3[j].append(tru)
                     else:
                         c+=0
-            elif qudrimestre == 1:
-                if a_1[i]['desMateria']==j:
-                    tru=a_1[i]['decValore']
-                    if type(tru) != 'NoneType' and tru !=0.00:
-                        voti_3[j].append(tru)
                 else:
-                    c += 0
+                    c+=0
+           #except:
+                # if a_1[i]['desMateria']==j:
+                #     tru=a_1[i]['decValore']
+                #     if type(tru) != 'NoneType' and tru !=0.00:
+                #         voti_3[j].append(tru)
+                # else:
+                #     c += 0
     
-    for j in materie:
+    for k in range(len(materie)):
+        print(materie[k])
         mi=mi+1
-        m1=voti_3[j]
+        m1=voti_3[materie[k]]
         m2 = len(m1)
-        m4=0
+        m4=0.0
         for m3 in range(m2):
-            m4+=m1[m3]
+            m4+=float(m1[m3])
         if m2 !=0:
             m5=m4/m2
+        else:
+            m5 = 10
         medie[mi]=int(round(m5,0))
 
     a=[]
@@ -92,10 +97,9 @@ def algoritmo1(session):
     n101=0
     voti=medie
     v2=medie
-
     media=np.mean(voti)
     while media < mm3:
-        if cambiamenti[k]==1:
+        if cambiamenti[k]=='1':
             voti[k]=voti[k]+1
         media=np.mean(voti)
         k=k+1
@@ -134,21 +138,21 @@ def index():
         session['username'] = request.form['username']
         session['password'] = request.form['password']
         session['materie'] = request.form['materie']
-        session['qudrimestre'] = request.form['quadrimestre']
-        session['media'] = request.form['media']
-        session['preferenze'] = request.form['preferenze']
-        session['comportamento'] = request.form['comportamento']
-        session['educazione_civica'] = request.form['educazione_civica']
-
+        #session['qudrimestre'] = request.form['quadrimestre']
+        session['media'] = float(request.form['media'])
+        session['preferenze'] = list(request.form['preferenze'])
+        session['comportamento'] = int(request.form['comportamento'])
+        session['educazione_civica'] = int(request.form['educazione_civica'])
 
         return algoritmo1(session)
+        
     return '''
         <form method="post">
             <p>codice scuola: <input type=text name=school_code>
             <p>username: <input type=text name=username>
             <p>password: <input type=text name=password>
             <p>materie: <input type=text name=materie>
-            <p>quadrimestre: <input type=text name=quadrimestre>
+
             <p>media: <input type=text name=media>
             <p>preferenze: <input type=text name=preferenze>
             <p>comportamento: <input type=text name=comportamento>
@@ -158,3 +162,4 @@ def index():
     '''
 
 
+#<p>quadrimestre: <input type=text name=quadrimestre>

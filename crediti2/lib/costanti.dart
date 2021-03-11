@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 String codiceScuola = 'ss16765';
 String username;
 String password;
@@ -211,6 +213,37 @@ void algoritmo1() {
   }
 }
 
-List<dynamic> yNVOTI = [0.0, 1.0, 7.0, 2.0, 2.0];
-dynamic mediavecchia = 9.1;
-dynamic mediaideale = 9.8;
+dynamic rispostaFinale = {
+  "df": {
+    "materie": [
+      "DISEGNO E STORIA DELL ARTE",
+      "FILOSOFIA",
+      "FISICA",
+      "LATINO",
+      "LINGUA INGLESE",
+      "MATEMATICA",
+      "STORIA",
+      "SCIENZE NATURALI",
+      "ITALIANO ",
+      "SCIENZE MOTORIE E SPORTIVE"
+    ],
+    "voti necessari": [10, 9, 9, 7, 9, 8, 10, 10, 7, 10, 10, 10]
+  },
+  "df_1": [0, 2, 1, 3, 6],
+  "media": 9.083333333333334,
+  "voti": [10, 9, 9, 7, 9, 8, 10, 10, 7, 10, 10, 10]
+};
+
+dynamic df_1 = rispostaFinale['df_1'];
+List<int> yNVOTI = rispostaFinale['df_1'];
+dynamic mediavecchia = rispostaFinale['df_1']; //['voti necessari'];
+dynamic materie23 = materieDaVisualizzare; //rispostaFinale['df']['materie'];
+dynamic mediaideale = rispostaFinale['media'];
+dynamic voti23 = rispostaFinale['voti'];
+
+dynamic Divider1 = Divider(
+  height: 40,
+  thickness: 5,
+  indent: 20,
+  endIndent: 20,
+);

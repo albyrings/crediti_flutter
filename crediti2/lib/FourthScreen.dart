@@ -66,14 +66,6 @@ class _FourthScreenState extends State<FourthScreen> {
                         const SizedBox(
                           height: 37,
                         ),
-                        const Text(
-                          'Unfold Shop 2018',
-                          style: TextStyle(
-                            color: Color(0xff827daa),
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
                         const SizedBox(
                           height: 4,
                         ),
@@ -121,16 +113,17 @@ class _FourthScreenState extends State<FourthScreen> {
                 ),
               ),
             ),
-            Padding(
+            Divider1,
+            /*Padding(
               padding: const EdgeInsets.only(left: 10, right: 10, top: 15),
               child: Text(
-                "Table",
+                "Riassuno",
                 textScaleFactor: 2,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-            ),
+            ),*/
             Padding(
-              padding: const EdgeInsets.all(8.00),
+              padding: const EdgeInsets.only(left: 30),
               child: Table(
                 // textDirection: TextDirection.rtl,
                 // defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
@@ -138,30 +131,68 @@ class _FourthScreenState extends State<FourthScreen> {
                 children: [
                   TableRow(children: [
                     Text(
-                      "Education",
+                      "Voto",
                       textScaleFactor: 1.5,
                     ),
-                    Text("Institution name", textScaleFactor: 1.5),
-                    Text("University", textScaleFactor: 1.5),
+                    Text("Numero necessario", textScaleFactor: 1.5),
                   ]),
                   TableRow(children: [
-                    Text("B.Tech", textScaleFactor: 1.5),
-                    Text("ABESEC", textScaleFactor: 1.5),
-                    Text("AKTU", textScaleFactor: 1.5),
+                    Text("6", textScaleFactor: 1.5),
+                    Text(df_1[0].toString(), textScaleFactor: 1.5),
                   ]),
                   TableRow(children: [
-                    Text("12th", textScaleFactor: 1.5),
-                    Text("Delhi Public School", textScaleFactor: 1.5),
-                    Text("CBSE", textScaleFactor: 1.5),
+                    Text("7", textScaleFactor: 1.5),
+                    Text(df_1[1].toString(), textScaleFactor: 1.5),
                   ]),
                   TableRow(children: [
-                    Text("High School", textScaleFactor: 1.5),
-                    Text("SFS", textScaleFactor: 1.5),
-                    Text("ICSE", textScaleFactor: 1.5),
+                    Text("8", textScaleFactor: 1.5),
+                    Text(df_1[2].toString(), textScaleFactor: 1.5),
+                  ]),
+                  TableRow(children: [
+                    Text("9", textScaleFactor: 1.5),
+                    Text(df_1[3].toString(), textScaleFactor: 1.5),
+                  ]),
+                  TableRow(children: [
+                    Text("10", textScaleFactor: 1.5),
+                    Text(df_1[4].toString(), textScaleFactor: 1.5),
                   ]),
                 ],
               ),
             ),
+            Divider1,
+            Padding(
+              padding: const EdgeInsets.only(left: 30),
+              child: Table(children: [
+                TableRow(children: [
+                  Text("Media:", textScaleFactor: 1.5),
+                  Text(rispostaFinale['media'].toString().substring(0, 5),
+                      textScaleFactor: 1.5),
+                ]),
+              ]),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(18)),
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xff2c274c),
+                      Color(0xff46426c),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.subdirectory_arrow_right_outlined),
+                  tooltip: 'Pagina successiva',
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/fifth');
+                  },
+                ),
+              ),
+            )
           ]),
         ),
       ),
@@ -179,7 +210,7 @@ LineChartData sampleData1() {
       handleBuiltInTouches: true,
     ),
     gridData: FlGridData(
-      show: false,
+      show: true,
     ),
     titlesData: FlTitlesData(
       bottomTitles: SideTitles(
@@ -228,14 +259,6 @@ LineChartData sampleData1() {
               return '5';
             case 6:
               return '6';
-            case 7:
-              return '7';
-            case 8:
-              return '8';
-            case 9:
-              return '9';
-            case 10:
-              return '10';
           }
           return '';
         },
@@ -263,8 +286,8 @@ LineChartData sampleData1() {
     ),
     minX: 0,
     maxX: 14,
-    maxY: 10,
-    minY: 2,
+    maxY: 6,
+    minY: 0,
     lineBarsData: linesBarData1(),
   );
 }
@@ -280,6 +303,8 @@ List<LineChartBarData> linesBarData1() {
     ],
     isCurved: true,
     colors: [
+      const Color(0xff27b6fc),
+      const Color(0xffaa4cfc),
       const Color(0xff4af699),
     ],
     barWidth: 8,
@@ -292,35 +317,35 @@ List<LineChartBarData> linesBarData1() {
     ),
   );
 
-  final LineChartBarData lineChartBarData2 = LineChartBarData(
-    spots: [
-      FlSpot(1, mediavecchia),
-      FlSpot(3, mediavecchia),
-      FlSpot(7, mediavecchia),
-      FlSpot(10, mediavecchia),
-      FlSpot(12, mediavecchia),
-      FlSpot(13, mediavecchia),
-    ],
-    isCurved: true,
-    colors: [
-      const Color(0xffaa4cfc),
-    ],
-    barWidth: 8,
-    isStrokeCapRound: true,
-    dotData: FlDotData(
-      show: false,
-    ),
-    belowBarData: BarAreaData(show: false, colors: [
-      const Color(0x00aa4cfc),
-    ]),
-  );
+  // final LineChartBarData lineChartBarData2 = LineChartBarData(
+  //   spots: [
+  //     FlSpot(1, mediavecchia.toDouble()),
+  //     FlSpot(3, mediavecchia),
+  //     FlSpot(7, mediavecchia),
+  //     FlSpot(10, mediavecchia),
+  //     FlSpot(12, mediavecchia),
+  //     FlSpot(13, mediavecchia),
+  //   ],
+  //   isCurved: true,
+  //   colors: [
+  //     const Color(0xffaa4cfc),
+  //   ],
+  //   barWidth: 8,
+  //   isStrokeCapRound: true,
+  //   dotData: FlDotData(
+  //     show: false,
+  //   ),
+  //   belowBarData: BarAreaData(show: false, colors: [
+  //     const Color(0x00aa4cfc),
+  //   ]),
+  // );
   final LineChartBarData lineChartBarData3 = LineChartBarData(
     spots: [
-      FlSpot(1, 2.8),
-      FlSpot(3, 1.9),
-      FlSpot(6, 3),
-      FlSpot(10, 1.3),
-      FlSpot(13, 2.5),
+      FlSpot(1, mediaideale),
+      FlSpot(3, mediaideale),
+      FlSpot(6, mediaideale),
+      FlSpot(10, mediaideale),
+      FlSpot(13, mediaideale),
     ],
     isCurved: true,
     colors: const [
@@ -337,8 +362,8 @@ List<LineChartBarData> linesBarData1() {
   );
   return [
     lineChartBarData1,
-    lineChartBarData2,
-    lineChartBarData3,
+    //lineChartBarData2,
+    //lineChartBarData3,
   ];
 }
 
@@ -348,7 +373,7 @@ LineChartData sampleData2() {
       enabled: false,
     ),
     gridData: FlGridData(
-      show: false,
+      show: true,
     ),
     titlesData: FlTitlesData(
       bottomTitles: SideTitles(
@@ -451,7 +476,7 @@ List<LineChartBarData> linesBarData2() {
       barWidth: 4,
       isStrokeCapRound: true,
       dotData: FlDotData(
-        show: false,
+        show: true,
       ),
       belowBarData: BarAreaData(
         show: false,
@@ -459,33 +484,11 @@ List<LineChartBarData> linesBarData2() {
     ),
     LineChartBarData(
       spots: [
-        FlSpot(1, 1),
-        FlSpot(3, 2.8),
-        FlSpot(7, 1.2),
-        FlSpot(10, 2.8),
-        FlSpot(12, 2.6),
-        FlSpot(13, 3.9),
-      ],
-      isCurved: true,
-      colors: const [
-        Color(0x99aa4cfc),
-      ],
-      barWidth: 4,
-      isStrokeCapRound: true,
-      dotData: FlDotData(
-        show: false,
-      ),
-      belowBarData: BarAreaData(show: true, colors: [
-        const Color(0x33aa4cfc),
-      ]),
-    ),
-    LineChartBarData(
-      spots: [
-        FlSpot(1, 3.8),
-        FlSpot(3, 1.9),
-        FlSpot(6, 5),
-        FlSpot(10, 3.3),
-        FlSpot(13, 4.5),
+        FlSpot(1, yNVOTI[0].toDouble()),
+        FlSpot(4, yNVOTI[1].toDouble()),
+        FlSpot(7, yNVOTI[2].toDouble()),
+        FlSpot(10, yNVOTI[3].toDouble()),
+        FlSpot(13, yNVOTI[4].toDouble()),
       ],
       isCurved: true,
       curveSmoothness: 0,
@@ -496,7 +499,7 @@ List<LineChartBarData> linesBarData2() {
       isStrokeCapRound: true,
       dotData: FlDotData(show: true),
       belowBarData: BarAreaData(
-        show: false,
+        show: true,
       ),
     ),
   ];
