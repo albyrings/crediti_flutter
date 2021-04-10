@@ -2,12 +2,12 @@ from flask import Flask, session, request
 import argoscuolanext
 import numpy as np
 import json
+import string
 
 app = Flask(__name__)
 
 # Set the secret key to some random bytes. Keep this really secret!
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-
 
 
 def data(session):
@@ -25,8 +25,18 @@ def data(session):
     return str(lista_voti).replace("'", "\"") #era una stringa, rischio di errore
 
 def algoritmo1(session):
+    dd=0
+    materie = []
     a_1 = json.loads(data(session))[session['username']]
-    materie = session['materie']#["DISEGNO E STORIA DELL ARTE",'FILOSOFIA','FISICA','LATINO','LINGUA INGLESE','MATEMATICA','STORIA','SCIENZE NATURALI','ITALIANO','SCIENZE MOTORIE E SPORTIVE'] #
+    #materie11 =session['materie']
+    for elem in a_1:
+        if not elem['desMateria'] in materie:
+            materie.append(elem['desMateria'])
+
+
+
+     
+    #["DISEGNO E STORIA DELL ARTE",'FILOSOFIA','FISICA','LATINO','LINGUA INGLESE','MATEMATICA','STORIA','SCIENZE NATURALI','ITALIANO','SCIENZE MOTORIE E SPORTIVE'] #
     #qudrimestre = int(session['quadrimestre'])
     mm3 = session['media']
     cambiamenti = session['preferenze']
@@ -53,8 +63,9 @@ def algoritmo1(session):
                 if a_1[i]['datGiorno'][6]=='2' or a_1[i]['datGiorno'][6]=='3' or a_1[i]['datGiorno'][6]=='4' or a_1[i]['datGiorno'][6]=='5' or a_1[i]['datGiorno'][6]=='6':
                     if a_1[i]['desMateria']==j:
                         tru=a_1[i]['decValore']
-                        if type(tru) != 'NoneType' and tru !=0.00:
-                            voti_3[j].append(tru)
+                        if type(tru) != 'NoneType' and tru != '0.00':
+                            if float(tru) != 0.0:
+                                voti_3[j].append(tru)
                     else:
                         c+=0
                 else:
@@ -68,18 +79,20 @@ def algoritmo1(session):
                 #     c += 0
     
     for k in range(len(materie)):
-        print(materie[k])
         mi=mi+1
-        m1=voti_3[materie[k]]
-        m2 = len(m1)
-        m4=0.0
-        for m3 in range(m2):
-            m4+=float(m1[m3])
-        if m2 !=0:
-            m5=m4/m2
-        else:
-            m5 = 10
-        medie[mi]=int(round(m5,0))
+        try:
+            m1=voti_3[materie[k]]
+            m2 = len(m1)
+            m4=0.0
+            for m3 in range(m2):
+                m4+=float(m1[m3])
+            if m2 != 0:
+                m5=m4/m2
+            else:
+                m5 = 10
+            medie[mi]=int(round(m5,0))
+        except:
+            asdf=0
 
     a=[]
     b=[]
@@ -98,15 +111,24 @@ def algoritmo1(session):
     voti=medie
     v2=medie
     media=np.mean(voti)
-    while media < mm3:
+    xiao = media < mm3
+    while k<len(voti) and xiao:
+        #print(k)
         if cambiamenti[k]=='1':
             voti[k]=voti[k]+1
         media=np.mean(voti)
-        k=k+1
+        if media >= mm3:
+            xiao = False
+        else:
+            k=k+1
 
-    df = {'materie': materie, 
+
+    df = {
+        #'materie': materie, 
         'voti necessari': voti,
     }
+
+    
 
     for i in range(len(voti)):
         if voti[i]==6:
@@ -137,7 +159,7 @@ def index():
         session['school_code'] = request.form['school_code']
         session['username'] = request.form['username']
         session['password'] = request.form['password']
-        session['materie'] = request.form['materie']
+        #session['materie'] = request.form['materie']
         #session['qudrimestre'] = request.form['quadrimestre']
         session['media'] = float(request.form['media'])
         session['preferenze'] = list(request.form['preferenze'])
@@ -148,10 +170,9 @@ def index():
         
     return '''
         <form method="post">
-            <p>codice scuola: <input type=text name=school_code>
+            <p>school_code: <input type=text name=school_code>
             <p>username: <input type=text name=username>
             <p>password: <input type=text name=password>
-            <p>materie: <input type=text name=materie>
 
             <p>media: <input type=text name=media>
             <p>preferenze: <input type=text name=preferenze>
@@ -163,3 +184,4 @@ def index():
 
 
 #<p>quadrimestre: <input type=text name=quadrimestre>
+#<p>materie: <input type=text name=materie>
